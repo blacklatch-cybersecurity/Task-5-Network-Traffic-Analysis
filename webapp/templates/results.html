@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Scan Results</title></head>
+<body>
+  <h1>Scan Results for {{ results.start_url }}</h1>
+  <p>Scanned pages: {{ results.scanned }} — Duration: {{ results.duration_sec }} sec</p>
+
+  {% if results.findings %}
+    <h2>Findings ({{ results.findings|length }})</h2>
+    <ul>
+      {% for f in results.findings %}
+        <li><strong>{{ f.type }}</strong> — target: {{ f.target }} {% if f.payload %} — payload: {{ f.payload }} {% endif %}
+            {% if f.evidence_snippet %}<pre>{{ f.evidence_snippet[:300] }}...</pre>{% endif %}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No issues found (basic checks).</p>
+  {% endif %}
+  <a href="/">Run another scan</a>
+</body>
+</html>
